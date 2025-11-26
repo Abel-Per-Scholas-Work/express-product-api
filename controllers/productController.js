@@ -28,6 +28,7 @@ const createProduct = async (req, res) => {
 		if (!product) {
 			res.status(400).json({ message: "Failed to create a new product" });
 		}
+		res.json(product);
 	} catch (error) {
 		console.log(error);
 		res.status(500).json({ message: error.message });
