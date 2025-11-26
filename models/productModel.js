@@ -11,7 +11,7 @@ const ProductSchema = new mongoose.Schema({
 	},
 	price: {
 		type: Number,
-		min: [0, "Must be great than 0"],
+		min: [1, "Must be great than 0"],
 	},
 	category: {
 		type: String,
