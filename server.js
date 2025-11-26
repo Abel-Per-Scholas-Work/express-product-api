@@ -23,7 +23,7 @@ app.get("/", (req, res) => {
 /**
  * Product Route
  */
-app.use("/product", productRoute);
+app.use("/products", productRoute);
 
 app.listen(PORT, () => {
 	console.log(`Sever is running on port: ${PORT}`);
