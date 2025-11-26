@@ -35,6 +35,23 @@ const createProduct = async (req, res) => {
 	}
 };
 
+/**
+ * GET /:id
+ * get a product by id
+ */
+const getProductById = async (req, res) => {
+	try {
+		const product = await Product.findById(req.params.id);
+		if (!product) {
+			res.status(400).json({ message: "Invalid ID" });
+		}
+		res.json(product);
+	} catch (error) {
+		console.log(error);
+		res.status(500).json({ message: error.message });
+	}
+};
+
 module.exports = {
 	getAllProducts,
 	createProduct,
