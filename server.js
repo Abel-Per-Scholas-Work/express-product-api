@@ -2,6 +2,7 @@ const express = require("express");
 const morgan = require("morgan");
 const connectDB = require("./db/connection");
 const dotenv = require("dotenv");
+const productRoute = require("./routes/productRoutes");
 
 //connect to database
 connectDB();
@@ -18,6 +19,11 @@ app.use(morgan("dev"));
 app.get("/", (req, res) => {
 	res.send("Welcome to Bibi Store");
 });
+
+/**
+ * Product Route
+ */
+app.use("/product", productRoute);
 
 app.listen(PORT, () => {
 	console.log(`Sever is running on port: ${PORT}`);
