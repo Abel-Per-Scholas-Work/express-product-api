@@ -2,12 +2,39 @@ const Product = require("../models/productModel");
 
 /**
  * GET /
- * get all products
+ * get all or filterd products
  */
 
 const getAllProducts = async (req, res) => {
+	// destructure the query
+	const { category, minPrice, maxPrice, sortBy = "price_asc" } = req.query;
+
+	/**
+	 * Filter Logic
+	 */
+	const filterObj = {};
+	//category
+	category ? (filterObj["category"] = { $in: [...category.split(",")] }) : "";
+	//minPrice
+	minPrice ? (filterObj["price"] = { $gte: minPrice }) : "";
+	//maxPrice
+	maxPrice ? (filterObj["price"] = { $lte: maxPrice }) : "";
+	console.log(filterObj);
+	/**
+	 * Sorting Login
+	 */
+	const sortObj = {};
+	const [obj, order] = sortBy.split("_");
+	sortObj[obj] = order === "asc" ? 1 : -1;
+	console.log(sortObj, obj, order);
+
 	try {
-		const products = await Product.find();
+		const products = await Product.find(filterObj).sort(sortObj).select({
+			name: 1,
+			price: 1,
+			category: 1,
+			_id: 0,
+		});
 		if (!products) {
 			res.status(400).json({ message: "Invalid URL" });
 		}
